@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: JulioBitencourt\Cart
+        psr4_prefix: JulioBitencourt\Cart
+        src_path: src

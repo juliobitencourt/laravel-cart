@@ -1,0 +1,18 @@
+{
+	"name": "juliobitencourt/cart",
+	"description": "A PHP Shopping Cart.",
+	"keywords": ["cart"],
+	"license": "MIT",
+	"require": {
+		"php": ">=5.4.0",
+        "illuminate/session": "*"
+	},
+	"require-dev": {
+		"phpspec/phpspec": "~2.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"JulioBitencourt\\Cart\\": "src/"
+		}
+	}
+}
