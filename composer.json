@@ -1,11 +1,20 @@
 {
-	"name": "juliobitencourt/cart",
-	"description": "A PHP Shopping Cart.",
-	"keywords": ["cart"],
+	"name": "juliobitencourt/laravel-cart",
+	"description": "A lightweight PHP Shopping Cart for Laravel 5.",
+	"keywords": ["cart", "laravel"],
+	"homepage": "http://github.com/juliobitencourt/laravel-cart",
 	"license": "MIT",
+	"authors": [
+        {
+            "name": "Julio Bitencourt",
+            "email": "julio@contagia.com.br",
+            "homepage": "http://www.contagia.com.br",
+            "role": "Developer"
+        }
+    ],
 	"require": {
 		"php": ">=5.4.0",
-        "illuminate/session": "*"
+		"illuminate/session": "*"
 	},
 	"require-dev": {
 		"phpspec/phpspec": "~2.1"

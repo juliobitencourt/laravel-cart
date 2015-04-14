@@ -180,7 +180,8 @@ class Cart implements CartInterface {
 	{
 		foreach (static::$cart as $key => $item)
 		{
-			if ($item[$field] == $value) return $key;
+			if (array_key_exists($field, $item) && $item[$field] == $value)
+				return $key;
 		}
 
 		return false;

@@ -72,7 +72,7 @@ class CartSpec extends ObjectBehavior
         $this->isEmpty()->shouldReturn(true);
     }
 
-    function it_add_an_child_to_an_item()
+    function it_add_a_child_to_an_item()
     {
         $this->destroy();
         $item = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 1, 'price' => 1500.00]);
@@ -80,6 +80,17 @@ class CartSpec extends ObjectBehavior
         $this->insertChild($item['id'], $childData);
         $this->totalItems()->shouldReturn(2);
         $this->total()->shouldReturn(1950.00); 
+    }
+
+    function it_remove_a_child_item()
+    {
+        $this->destroy();
+        $item = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 1, 'price' => 1500.00]);
+        $childData = ['sku' => '123456-1', 'description' => 'Extended Warranty', 'quantity' => 1, 'price' => 450.00];
+        $childItem = $this->insertChild($item['id'], $childData);
+        $this->delete($childItem['id']);
+        $this->totalItems()->shouldReturn(1);
+        $this->total()->shouldReturn(1500.00); 
     }
 
     function it_remove_an_child_if_the_parent_is_removed()
