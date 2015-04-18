@@ -17,7 +17,7 @@ $ composer require juliobitencourt/laravel-cart
 }
 ```
 
-Add the service proficer to your app/config/app.php in the service providers array
+Add the service provider to your app/config/app.php in the service providers array
 
 ```php
 'JulioBitencourt\Cart\CartServiceProvider',
