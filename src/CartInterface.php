@@ -2,20 +2,20 @@
 
 interface CartInterface {
 
-	public function insert($item);
+    public function insert($item);
 
-	public function update($id, $quantity);
+    public function update($id, $quantity);
 
-	public function delete($id);
+    public function delete($id);
 
-	public function all();
+    public function all();
 
-	public function isEmpty();
+    public function isEmpty();
 
-	public function destroy();
+    public function destroy();
 
-	public function totalItems();
+    public function totalItems();
 
-	public function total();
+    public function total();
 
 }
