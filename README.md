@@ -25,6 +25,21 @@ Add the service provider to your app/config/app.php in the service providers arr
 
 ## Usage
 
+### Inject the class into the constructor.
+
+```php
+use JulioBitencourt\Cart\CartInterface;
+
+class CartController extends Controller {
+
+	protected $cart;
+
+	public function __construct(CartInterface $cart)
+	{
+		$this->cart = $cart;
+	}
+```
+
 ### Insert a new Item to the cart.
 
 If you insert an item with the same SKU twice, the item quantity will be updated.
