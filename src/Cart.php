@@ -1,11 +1,11 @@
-<?php namespace JulioBitencourt\Cart\Session;
+<?php namespace JulioBitencourt\Cart;
 
 use JulioBitencourt\Cart\CartInterface;
-use Illuminate\Session\Store as Session;
+use JulioBitencourt\Cart\Storage\StorageInterface as Storage;
 
 class Cart implements CartInterface {
 
-    protected $session;
+    protected $storage;
 
     protected static $cart = [];
 
@@ -14,11 +14,11 @@ class Cart implements CartInterface {
      *
      * @return void
      */
-    public function __construct(Session $session)
+    public function __construct(Storage $storage)
     {
-        $this->session = $session;
+        $this->storage = $storage;
 
-        $cart = $this->session->get('cart');
+        $cart = $this->storage->get();
         if ($cart) static::$cart = $cart;
     }
 
@@ -102,7 +102,7 @@ class Cart implements CartInterface {
 
         $this->deleteChild($id);
 
-        $this->save();
+        $this->storage->delete($itemKey);
     }
 
     /**
@@ -113,7 +113,7 @@ class Cart implements CartInterface {
     public function destroy()
     {
         static::$cart = [];
-        $this->save();
+        $this->storage->destroy();
     }
 
     /**
@@ -171,7 +171,7 @@ class Cart implements CartInterface {
     }
 
     /**
-     * Check if an item exists in the cart.
+     * Check if an item exists in the collection.
      * If so, returns the key.
      *
      * @return bool
@@ -238,7 +238,7 @@ class Cart implements CartInterface {
             $data
         );
         static::$cart[] = $data;
-        $this->save();
+        $this->storage->insert($data);
         return $data;
     }
 
@@ -253,12 +253,13 @@ class Cart implements CartInterface {
         if ($quantity == 0)
         {
             unset(static::$cart[$itemKey]);
+            $this->storage->delete($itemKey);
         }
         else
         {
-            static::$cart[$itemKey]['quantity'] = $quantity;    
+            static::$cart[$itemKey]['quantity'] = $quantity;
+            $this->storage->update($itemKey, $quantity);
         }
-        $this->save();
     }
 
     protected function deleteChild($parentId)
@@ -283,18 +284,7 @@ class Cart implements CartInterface {
     }
 
     /**
-     * Store the data in the session.
-     *
-     * @return array
-     */
-    protected function save()
-    {
-        $data = static::$cart;
-        $this->session->put('cart', $data);
-    }
-
-    /**
-     * Validates the item
+     * Validate the item
      *
      * @param  array  $fields
      * @return void

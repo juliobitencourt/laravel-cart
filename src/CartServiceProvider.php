@@ -7,8 +7,8 @@ class CartServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->app->bind(
-            'JulioBitencourt\Cart\CartInterface',
-            'JulioBitencourt\Cart\Session\Cart'
+            'JulioBitencourt\Cart\StorageInterface',
+            'JulioBitencourt\Cart\Storage\Session\SessionStorage'
         );
     }
 }

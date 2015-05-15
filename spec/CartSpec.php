@@ -1,35 +1,42 @@
-<?php namespace spec\JulioBitencourt\Cart\Session;
+<?php namespace spec\JulioBitencourt\Cart;
 
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Matcher\InlineMatcher;
 use Prophecy\Argument;
-use Illuminate\Session\Store as Session;
+use JulioBitencourt\Cart\Storage\StorageInterface as Storage;
 
 class CartSpec extends ObjectBehavior
 {
-    function let(Session $session)
+    function let(Storage $storage)
     {
-    	$this->beConstructedWith($session);
-    	$this->shouldHaveType('JulioBitencourt\Cart\Session\Cart');
+    	$this->beConstructedWith($storage);
+    	$this->shouldHaveType('JulioBitencourt\Cart\Cart');
     }
 
     function it_store_a_new_item()
     {
-        $this->destroy();
-    	$this->insert(['sku' => '123465', 'description' => 'XBox', 'quantity' => 1, 'price' => 1500.00, 'options' => ['color' => 'Red']]);
-    	$this->totalItems()->shouldReturn(1);
-    	$this->total()->shouldReturn(1500.00);
+        // $data = ["id" => "e10adc3949ba59abbe56e057f20f883e", "sku" => "123456", "description" => "XBox", "quantity" => 1, "price" => 1500, "options" => ["color" => "Red"]];
+        // $storage->insert($data)->shouldBeCalled()->willReturn($data);
+        $result = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 1, 'price' => 1500.00, 'options' => ['color' => 'Red']]);
+    	$result->shouldBeArray();
+        $result->shouldHaveKey('sku');
+        $result->shouldContain('e10adc3949ba59abbe56e057f20f883e');
     }
 
     function it_store_a_array_of_items()
     {
-        $this->destroy();
-        $this->insert([
+        // $data1 = ["id" => "96e79218965eb72c92a549dd5a330112", "sku" => "111111", "description" => "XBox", "quantity" => 1, "price" => 1000];
+        // $data2 = ["id" => "e3ceb5881a0a1fdaad01296d7554868d", "sku" => "222222", 'description' => 'PlayStation', 'quantity' => 1, 'price' => 2000.00];
+        
+        // $storage->insert($data1)->shouldBeCalled()->willReturn($data1);
+        // $storage->insert($data2)->shouldBeCalled()->willReturn($data2);
+
+        $result = $this->insert([
             ['sku' => '111111', 'description' => 'XBox', 'quantity' => 1, 'price' => 1000.00],
             ['sku' => '222222', 'description' => 'PlayStation', 'quantity' => 1, 'price' => 2000.00]
         ]);
-        $this->totalItems()->shouldReturn(2);
-        $this->total()->shouldReturn(3000.00);
+
+        $result->shouldBeArray();
     }
 
     function it_increment_an_item_added_twice()
