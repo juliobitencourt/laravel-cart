@@ -1,4 +1,4 @@
-<?php namespace JulioBitencourt\Cart\Eloquent;
+<?php namespace JulioBitencourt\Cart\Storage\Session;
 
 use JulioBitencourt\Cart\Storage\StorageInterface;
 use Illuminate\Session\Store as Session;
@@ -16,7 +16,7 @@ class SessionRepository implements StorageInterface {
     /**
      * @param Cart $session
      */
-    function __construct(Cart $session)
+    function __construct(Session $session)
     {
         $this->session = $session;
     }
@@ -38,14 +38,14 @@ class SessionRepository implements StorageInterface {
 
     public function update($id, $quantity)
     {
-        $storedData = $this->get;
+        $storedData = $this->get();
         $storedData[$id]['quantity'] = $quantity;
         $this->session->put('cart', $storedData);
     }
 
     public function delete($id)
     {
-        $storedData = $this->get;
+        $storedData = $this->get();
         unset($storedData[$id]);
         $this->session->put('cart', $storedData);
     }

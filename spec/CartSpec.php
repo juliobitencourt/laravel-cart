@@ -73,7 +73,6 @@ class CartSpec extends ObjectBehavior
 
     function it_remove_an_item_if_the_quantity_is_zero()
     {
-        $this->destroy();
         $item = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 10, 'price' => 1500.00]);
         $this->update($item['id'], 0);
         $this->isEmpty()->shouldReturn(true);
