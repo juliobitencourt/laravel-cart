@@ -1,7 +1,9 @@
-<?php namespace JulioBitencourt\Cart\Storage;
+<?php
 
-interface StorageInterface {
+namespace JulioBitencourt\Cart\Storage;
 
+interface StorageInterface
+{
     public function get();
 
     public function insert($data);
@@ -11,5 +13,4 @@ interface StorageInterface {
     public function delete($id);
 
     public function destroy();
-
 }

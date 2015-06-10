@@ -1,25 +1,26 @@
-<?php namespace JulioBitencourt\Cart;
+<?php
 
-use JulioBitencourt\Cart\CartInterface;
+namespace JulioBitencourt\Cart;
+
 use JulioBitencourt\Cart\Storage\StorageInterface as Storage;
 
-class Cart implements CartInterface {
-
+class Cart implements CartInterface
+{
     protected $storage;
 
     protected static $cart = [];
 
     /**
      * Create a new Cart instance.
-     *
-     * @return void
      */
     public function __construct(Storage $storage)
     {
         $this->storage = $storage;
 
         $cart = $this->storage->get();
-        if ($cart) static::$cart = $cart;
+        if ($cart) {
+            static::$cart = $cart;
+        }
     }
 
     /**
@@ -27,21 +28,23 @@ class Cart implements CartInterface {
      * If it exists, increments the item
      * Otherwise. Creates a new one.
      *
-     * @param  array  $data
+     * @param array $data
+     *
      * @return array
      */
     public function insert($data = [])
     {
         // First we check if the data is an array of items
         // If not, we create an array to iterate in.
-        if (isset($data['sku']))
-        {
+        if (isset($data['sku'])) {
             $data = array($data);
         }
-        
+
         $items = $this->processItems($data);
 
-        if (count($items) == 0) return false;
+        if (count($items) == 0) {
+            return false;
+        }
 
         return count($items) == 1 ? $items[0] : $items;
     }
@@ -55,10 +58,12 @@ class Cart implements CartInterface {
     {
         $itemKey = $this->findBy('id', $parentId);
 
-        if ($itemKey === false) return false;
+        if ($itemKey === false) {
+            return false;
+        }
 
         $parentDescription = static::$cart[$itemKey]['description'];
-        
+
         $data = array_merge(
             ['parent_id' => $parentId, 'parent_description' => $parentDescription],
             $data
@@ -70,8 +75,9 @@ class Cart implements CartInterface {
     /**
      * Update an item.
      *
-     * @param  int  $id
-     * @param  int  $quantity
+     * @param int $id
+     * @param int $quantity
+     *
      * @return bool
      */
     public function update($id, $quantity)
@@ -80,24 +86,28 @@ class Cart implements CartInterface {
 
         $itemKey = $this->findBy('id', $id);
 
-        if ($itemKey === false) return false;
-        
+        if ($itemKey === false) {
+            return false;
+        }
+
         $this->updateOrDelete($itemKey, $quantity);
+
         return true;
     }
 
     /**
      * Remove an item.
      *
-     * @param  int  $id
-     * @return void
+     * @param int $id
      */
     public function delete($id)
     {
         $itemKey = $this->findBy('id', $id);
 
-        if ($itemKey === false) return false;
-        
+        if ($itemKey === false) {
+            return false;
+        }
+
         unset(static::$cart[$itemKey]);
 
         $this->deleteChild($id);
@@ -107,8 +117,6 @@ class Cart implements CartInterface {
 
     /**
      * Destroy the cart.
-     *
-     * @return void
      */
     public function destroy()
     {
@@ -128,8 +136,6 @@ class Cart implements CartInterface {
 
     /**
      * Check a list with the cart items.
-     *
-     * @return void
      */
     public function all()
     {
@@ -145,8 +151,7 @@ class Cart implements CartInterface {
     {
         $amount = 0;
 
-        foreach (static::$cart as $item)
-        {
+        foreach (static::$cart as $item) {
             $amount += $item['price'] * $item['quantity'];
         }
 
@@ -156,14 +161,13 @@ class Cart implements CartInterface {
     /**
      * Sum the total items in the cart.
      *
-     * @return integer
+     * @return int
      */
     public function totalItems()
     {
         $count = 0;
 
-        foreach (static::$cart as $item)
-        {
+        foreach (static::$cart as $item) {
             $count += $item['quantity'];
         }
 
@@ -178,10 +182,10 @@ class Cart implements CartInterface {
      */
     protected function findBy($field, $value)
     {
-        foreach (static::$cart as $key => $item)
-        {
-            if (array_key_exists($field, $item) && $item[$field] == $value)
+        foreach (static::$cart as $key => $item) {
+            if (array_key_exists($field, $item) && $item[$field] == $value) {
                 return $key;
+            }
         }
 
         return false;
@@ -196,18 +200,14 @@ class Cart implements CartInterface {
     {
         $items = [];
 
-        foreach ($data as $item)
-        {
+        foreach ($data as $item) {
             $this->validate($item);
 
             $itemKey = $this->findBy('sku', $item['sku']);
 
-            if ($itemKey === false)
-            {
+            if ($itemKey === false) {
                 $items[] = $this->createItem($item);
-            }
-            else
-            {
+            } else {
                 $items[] = $this->incrementItem($itemKey, $item['quantity']);
             }
         }
@@ -217,8 +217,6 @@ class Cart implements CartInterface {
 
     /**
      * If the item already exists in the cart, updates the quantity.
-     *
-     * @return void
      */
     protected function incrementItem($itemKey, $quantity)
     {
@@ -239,24 +237,20 @@ class Cart implements CartInterface {
         );
         static::$cart[] = $data;
         $this->storage->insert($data);
+
         return $data;
     }
 
     /**
      * Update the item quantity or remove the item
      * if the quantity is zero.
-     *
-     * @return void
      */
     protected function updateOrDelete($itemKey, $quantity)
     {
-        if ($quantity == 0)
-        {
+        if ($quantity == 0) {
             unset(static::$cart[$itemKey]);
             $this->storage->delete($itemKey);
-        }
-        else
-        {
+        } else {
             static::$cart[$itemKey]['quantity'] = $quantity;
             $this->storage->update($itemKey, $quantity);
         }
@@ -266,7 +260,9 @@ class Cart implements CartInterface {
     {
         $itemKey = $this->findBy('parent_id', $parentId);
 
-        if ($itemKey === false) return false;
+        if ($itemKey === false) {
+            return false;
+        }
 
         $childId = static::$cart[$itemKey]['id'];
 
@@ -284,52 +280,47 @@ class Cart implements CartInterface {
     }
 
     /**
-     * Validate the item
+     * Validate the item.
      *
-     * @param  array  $fields
-     * @return void
+     * @param array $fields
      *
      * @throws \InvalidArgumentException
      */
     protected function validate($fields)
     {
-        foreach ($fields as $field => $value)
-        {
-            if ($field == 'parent_id' || $field == 'parent_description') continue;
+        foreach ($fields as $field => $value) {
+            if ($field == 'parent_id' || $field == 'parent_description') {
+                continue;
+            }
 
             switch ($field) {
                 case 'sku':
-                    if (empty($value))
-                    {
+                    if (empty($value)) {
                         throw new \InvalidArgumentException('Invalid SKU for the item');
                     }
                     break;
                 case 'description':
-                    if (empty($value))
-                    {
+                    if (empty($value)) {
                         throw new \InvalidArgumentException('Invalid Description for the item');
                     }
                     break;
                 case 'quantity':
-                    if ( ! preg_match('/^-?(?:\d+|\d*\.\d+)$/', $value))
-                    {
+                    if (!preg_match('/^-?(?:\d+|\d*\.\d+)$/', $value)) {
                         throw new \InvalidArgumentException('Invalid Quantity for the item');
                     }
                     break;
                 case 'price':
-                    if ( ! preg_match('/^-?(?:\d+|\d*\.\d+)$/', $value))
-                    {
+                    if (!preg_match('/^-?(?:\d+|\d*\.\d+)$/', $value)) {
                         throw new \InvalidArgumentException('Invalid Price for the item');
                     }
                     break;
 
                 case 'options':
-                    if ( ! is_array($value))
-                    {
+                    if (!is_array($value)) {
                         throw new \InvalidArgumentException('Invalid Options for the item');
                     }
                     break;
-                
+
                 default:
                     throw new \InvalidArgumentException();
                     break;

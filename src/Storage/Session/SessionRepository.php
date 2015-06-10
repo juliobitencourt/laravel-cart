@@ -1,22 +1,24 @@
-<?php namespace JulioBitencourt\Cart\Storage\Session;
+<?php
+
+namespace JulioBitencourt\Cart\Storage\Session;
 
 use JulioBitencourt\Cart\Storage\StorageInterface;
 use Illuminate\Session\Store as Session;
 
 /**
-* 
-*/
-class SessionRepository implements StorageInterface {
-
+ *
+ */
+class SessionRepository implements StorageInterface
+{
     /**
      * @var Cart
      */
     protected $session;
-    
+
     /**
      * @param Cart $session
      */
-    function __construct(Session $session)
+    public function __construct(Session $session)
     {
         $this->session = $session;
     }
@@ -54,5 +56,4 @@ class SessionRepository implements StorageInterface {
     {
         $this->session->put('cart', []);
     }
-
 }
