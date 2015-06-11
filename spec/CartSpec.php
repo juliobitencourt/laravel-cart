@@ -145,6 +145,14 @@ class CartSpec extends ObjectBehavior
     	$this->all()[0]->shouldContain('XBox');
     }
 
+    function it_store_the_email()
+    {
+        $this->destroy();
+        $this->setEmail('atendimento@contagia.com.br');
+        $this->all()->shouldHaveKey('email');
+        $this->all()->shouldContain('atendimento@contagia.com.br');
+    }
+
     function it_should_validate_a_new_item()
     {
         $this->destroy();
@@ -163,5 +171,5 @@ class CartSpec extends ObjectBehavior
         $item = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 5, 'price' => 1500.00]);
         $this->shouldThrow('InvalidArgumentException')->duringUpdate($item['id'], 'a');
     }
-    
+
 }

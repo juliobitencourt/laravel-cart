@@ -8,9 +8,11 @@ interface StorageInterface
 
     public function insert($data);
 
-    public function update($id, $quantity);
+    public function update($itemKey, $quantity);
 
-    public function delete($id);
+    public function delete($itemKey);
 
     public function destroy();
+
+    public function setEmail($email);
 }

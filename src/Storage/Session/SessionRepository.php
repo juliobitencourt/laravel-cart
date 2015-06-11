@@ -44,26 +44,26 @@ class SessionRepository implements StorageInterface
 
     /**
      * Update the item on the session
-     * @param  integer $id
+     * @param  integer $itemKey
      * @param  integer $quantity
      * @return void
      */
-    public function update($id, $quantity)
+    public function update($itemKey, $quantity)
     {
         $storedData = $this->get();
-        $storedData[$id]['quantity'] = $quantity;
+        $storedData[$itemKey]['quantity'] = $quantity;
         $this->session->put('cart', $storedData);
     }
 
     /**
      * Delete the item from the storage
-     * @param  integer $id
+     * @param  integer $itemKey
      * @return void
      */
-    public function delete($id)
+    public function delete($itemKey)
     {
         $storedData = $this->get();
-        unset($storedData[$id]);
+        unset($storedData[$itemKey]);
         $this->session->put('cart', $storedData);
     }
 
@@ -74,5 +74,16 @@ class SessionRepository implements StorageInterface
     public function destroy()
     {
         $this->session->put('cart', []);
+    }
+
+    /**
+     * Store the email for the Cart
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $storedData = $this->get();
+        $storedData['email'] = $email;
+        $this->session->put('cart', $storedData);
     }
 }

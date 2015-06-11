@@ -32,7 +32,7 @@ class EloquentRepository implements StorageInterface
      */
     public function get()
     {
-        return $this->cart->items()->get();
+        return $this->cart->items()->get()->toArray();
     }
 
     /**
@@ -48,24 +48,25 @@ class EloquentRepository implements StorageInterface
 
     /**
      * Update the item on the model
-     * @param  integer $id
+     * @param  integer $itemKey
      * @param  integer $quantity
      * @return void
      */
-    public function update($id, $quantity)
+    public function update($itemKey, $quantity)
     {
-        $item = Items::where(['id' => $id, 'cart_id' => $this->cart->id]);
-        $item->update(['quantity' => $quantity]);
+        $items = $this->cart->items()->get();
+        $items[$itemKey]->update(['quantity' => $quantity]);
     }
 
     /**
      * Delete the item from the storage
-     * @param  integer $id
+     * @param  integer $itemKey
      * @return void
      */
-    public function delete($id)
+    public function delete($itemKey)
     {
-        Items::where(['id' => $id, 'cart_id' => $this->cart->id])->delete();
+        $items = $this->cart->items()->get();
+        $items[$itemKey]->delete();
     }
 
     /**
@@ -77,6 +78,10 @@ class EloquentRepository implements StorageInterface
         Items::where('cart_id', $this->cart->id)->delete();
     }
 
+    /**
+     * Store the email for the Cart
+     * @param string $email
+     */
     public function setEmail($email)
     {
         $this->cart->update(['email' => $email]);
