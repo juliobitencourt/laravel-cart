@@ -19,4 +19,6 @@ interface CartInterface
     public function totalItems();
 
     public function total();
+
+    public function setEmail($email);
 }

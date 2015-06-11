@@ -29,7 +29,7 @@ class CartServiceProvider extends ServiceProvider
                      break;
 
                  case 'Database':
-                     return new Storage\Eloquent\EloquentRepository($app['Storage\Eloquent\Entities\Cart']);
+                     return new Storage\Eloquent\EloquentRepository();
                      break;
 
                  default:

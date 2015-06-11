@@ -174,6 +174,14 @@ class Cart implements CartInterface
         return $count;
     }
 
+    public function setEmail($email)
+    {
+        $this->validate(['email' => $email]);
+
+        static::$cart['email'] = $email;
+        $this->storage->setEmail($email);
+    }
+
     /**
      * Check if an item exists in the collection.
      * If so, returns the key.
@@ -314,13 +322,16 @@ class Cart implements CartInterface
                         throw new \InvalidArgumentException('Invalid Price for the item');
                     }
                     break;
-
                 case 'options':
                     if (!is_array($value)) {
                         throw new \InvalidArgumentException('Invalid Options for the item');
                     }
                     break;
-
+                case 'email':
+                    if ( ! filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                        throw new \InvalidArgumentException('Invalid Email Address');
+                    }
+                    break;
                 default:
                     throw new \InvalidArgumentException();
                     break;

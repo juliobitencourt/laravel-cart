@@ -12,6 +12,7 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('voucher')->index();
             $table->string('email')->index();
             $table->string('token')->index();
             $table->timestamps();
