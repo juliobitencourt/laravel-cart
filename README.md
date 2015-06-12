@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/juliobitencourt/laravel-cart.svg?branch=master)](https://travis-ci.org/juliobitencourt/laravel-cart)
 [![Latest Stable Version](https://poser.pugx.org/juliobitencourt/laravel-cart/v/stable)](https://packagist.org/packages/juliobitencourt/laravel-cart) [![Total Downloads](https://poser.pugx.org/juliobitencourt/laravel-cart/downloads)](https://packagist.org/packages/juliobitencourt/laravel-cart) [![Latest Unstable Version](https://poser.pugx.org/juliobitencourt/laravel-cart/v/unstable)](https://packagist.org/packages/juliobitencourt/laravel-cart) [![License](https://poser.pugx.org/juliobitencourt/laravel-cart/license)](https://packagist.org/packages/juliobitencourt/laravel-cart)
 
+[![Code Climate](https://codeclimate.com/github/juliobitencourt/laravel-cart/badges/gpa.svg)](https://codeclimate.com/github/juliobitencourt/laravel-cart)
+
 A lightweight PHP Shopping Cart for Laravel 5.
 ============
 
