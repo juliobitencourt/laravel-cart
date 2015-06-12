@@ -174,6 +174,12 @@ class Cart implements CartInterface
         return $count;
     }
 
+    /**
+     * Set the email for the cart
+     * @param string $email
+     *
+     * @return void
+     */
     public function setEmail($email)
     {
         $this->validate(['email' => $email]);

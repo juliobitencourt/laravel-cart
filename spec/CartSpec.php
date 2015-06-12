@@ -148,9 +148,9 @@ class CartSpec extends ObjectBehavior
     function it_store_the_email()
     {
         $this->destroy();
-        $this->setEmail('atendimento@contagia.com.br');
+        $this->setEmail('julio@contagia.com.br');
         $this->all()->shouldHaveKey('email');
-        $this->all()->shouldContain('atendimento@contagia.com.br');
+        $this->all()->shouldContain('julio@contagia.com.br');
     }
 
     function it_should_validate_a_new_item()
