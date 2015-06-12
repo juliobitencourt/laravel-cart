@@ -12,7 +12,7 @@ $ composer require juliobitencourt/laravel-cart
 ```json
 {
     "require": {
-        "juliobitencourt/laravel-cart": "dev-master"
+        "juliobitencourt/laravel-cart": "1.0.0"
     }
 }
 ```
@@ -124,4 +124,12 @@ $this->cart->totalItems();
 
 ```php
 $this->cart->total();
+```
+
+### Identify the cart with the e-mail.
+
+This is useful if you want to implement abandoned cart recovery.
+
+```php
+$this->cart->setEmail($email)
 ```
