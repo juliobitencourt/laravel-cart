@@ -16,7 +16,7 @@ class CreateCartItemsTable extends Migration
             $table->string('sku');
             $table->string('description');
             $table->integer('quantity')->unsigned();
-            $table->decimal('price', 5, 2);
+            $table->decimal('price', 10, 2);
             $table->string('options');
             $table->timestamps();
             $table->foreign('cart_id')->references('id')->on('carts');
