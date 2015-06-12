@@ -23,6 +23,20 @@ Add the service provider to your app/config/app.php in the service providers arr
 'JulioBitencourt\Cart\CartServiceProvider',
 ```
 
+Publish the resources
+
+```shell
+php artisan vendor:publish
+```
+
+Check the config/laravel-cart.php file. The storage-driver config can have the values Session (default) or Database.
+
+In case you use Database as the storage driver you have to run the migrations
+
+```shel
+php artisan migrate
+```
+
 ## Usage
 
 ### Inject the class into the constructor.
