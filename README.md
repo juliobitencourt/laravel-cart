@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/juliobitencourt/laravel-cart.svg?branch=master)](https://travis-ci.org/juliobitencourt/laravel-cart)
+
 A lightweight PHP Shopping Cart for Laravel 5.
 ============
 
