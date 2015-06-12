@@ -14,7 +14,8 @@
     ],
 	"require": {
 		"php": ">=5.4.0",
-		"illuminate/session": "*"
+		"illuminate/session": "*",
+		"illuminate/database": "~5.0|~5.1@dev"
 	},
 	"require-dev": {
 		"phpspec/phpspec": "~2.1"

@@ -1,7 +1,9 @@
-<?php namespace JulioBitencourt\Cart;
+<?php
 
-interface CartInterface {
+namespace JulioBitencourt\Cart;
 
+interface CartInterface
+{
     public function insert($item);
 
     public function update($id, $quantity);
@@ -18,4 +20,5 @@ interface CartInterface {
 
     public function total();
 
+    public function setEmail($email);
 }
