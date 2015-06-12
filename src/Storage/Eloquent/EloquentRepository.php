@@ -93,7 +93,7 @@ class EloquentRepository implements StorageInterface
      */
     protected function getOrCreate()
     {
-        $cartId = Cookie::get('eastman_cart');
+        $cartId = Cookie::get('laravel_cart');
 
         if ($cartId) return $this->getCartByCookie($cartId);
 
@@ -123,7 +123,7 @@ class EloquentRepository implements StorageInterface
         $cart = new Cart;
         $cart->save();
         $cartId = $cart->id;
-        Cookie::queue(Cookie::make('eastman_cart', $cartId, 21600));
+        Cookie::queue(Cookie::make('laravel_cart', $cartId, 21600));
         return $cart;
     }
 
