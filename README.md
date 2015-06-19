@@ -47,13 +47,13 @@ php artisan migrate
 ### Inject the class into the constructor.
 
 ```php
-use JulioBitencourt\Cart\CartInterface;
+use JulioBitencourt\Cart\Cart;
 
 class CartController extends Controller {
 
 	protected $cart;
 
-	public function __construct(CartInterface $cart)
+	public function __construct(Cart $cart)
 	{
 		$this->cart = $cart;
 	}
