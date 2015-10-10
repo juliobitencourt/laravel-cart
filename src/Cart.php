@@ -319,7 +319,7 @@ class Cart implements CartInterface
                     }
                     break;
                 case 'quantity':
-                    if (!preg_match('/^-?(?:\d+|\d*\.\d+)$/', $value)) {
+                    if (!preg_match('/^[+]?\d+([.]\d+)?$/', $value)) {
                         throw new \InvalidArgumentException('Invalid Quantity for the item');
                     }
                     break;

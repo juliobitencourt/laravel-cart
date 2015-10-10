@@ -23,14 +23,20 @@ class CartSpec extends ObjectBehavior
         $result->shouldContain('e10adc3949ba59abbe56e057f20f883e');
     }
 
+    function it_doesnt_add_an_item_if_the_quantity_is_negative()
+    {
+        $this->destroy();
+        $this->shouldThrow('InvalidArgumentException')
+             ->duringInsert([
+                'sku' => '123456',
+                'description' => 'Xbox',
+                'quantity' => '-1',
+                'price' => '1111,01'
+            ]);
+    }
+
     function it_store_a_array_of_items()
     {
-        // $data1 = ["id" => "96e79218965eb72c92a549dd5a330112", "sku" => "111111", "description" => "XBox", "quantity" => 1, "price" => 1000];
-        // $data2 = ["id" => "e3ceb5881a0a1fdaad01296d7554868d", "sku" => "222222", 'description' => 'PlayStation', 'quantity' => 1, 'price' => 2000.00];
-        
-        // $storage->insert($data1)->shouldBeCalled()->willReturn($data1);
-        // $storage->insert($data2)->shouldBeCalled()->willReturn($data2);
-
         $result = $this->insert([
             ['sku' => '111111', 'description' => 'XBox', 'quantity' => 1, 'price' => 1000.00],
             ['sku' => '222222', 'description' => 'PlayStation', 'quantity' => 1, 'price' => 2000.00]
@@ -76,6 +82,13 @@ class CartSpec extends ObjectBehavior
         $item = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 10, 'price' => 1500.00]);
         $this->update($item['id'], 0);
         $this->isEmpty()->shouldReturn(true);
+    }
+
+    function it_remove_an_item_if_the_quantity_is_negative()
+    {
+        $item = $this->insert(['sku' => '123456', 'description' => 'XBox', 'quantity' => 10, 'price' => 1500.00]);
+        $this->shouldThrow('InvalidArgumentException')
+             ->duringUpdate($item['id'], -1);
     }
 
     function it_add_a_child_to_an_item()
