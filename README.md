@@ -17,7 +17,7 @@ $ composer require juliobitencourt/laravel-cart
 ```json
 {
     "require": {
-        "juliobitencourt/laravel-cart": "1.0.0"
+        "juliobitencourt/laravel-cart": "1.0.*"
     }
 }
 ```
